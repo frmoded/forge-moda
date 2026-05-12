@@ -1,24 +1,28 @@
 ---
 type: action
-inputs: [state, dt]
+inputs:
+  - state
+  - dt
 description: Advance the world by one time step. Returns the updated ParticleState.
 ---
 
 # English
 
-Advance the world by one time step `dt`. Move all particles forward in their current direction by their current speed by calling [[move_all_particles]] with `state` and `dt`. Returns the updated `ParticleState`.
+Advance the world by one time step `dt`. First move all particles forward in their current direction by their current speed (call [[move_all_particles]] with `state` and `dt`). Then reflect any particles that crossed the canvas walls (call [[bounce_all_particles_off_walls]] on the moved state). Returns the updated `ParticleState`.
 
-Wall collisions and particle-particle interactions are NOT implemented at this phase — particles may leave the canvas; that is expected for Phase 2.
+Particle-particle interactions are NOT implemented at this phase — Phase 5.
 
 # Python
 
 ```python
 def compute(context, state, dt):
-    return context.compute("move_all_particles", state=state, dt=dt)
+    moved = context.compute("move_all_particles", state=state, dt=dt)
+    bounced = context.compute("bounce_all_particles_off_walls", state=moved)
+    return bounced
 ```
 
 # Dependencies
 
 *Synced from Python. Edit the Python and regenerate, or run "Forge: Sync edges" to refresh.*
 
-[[move_all_particles]]
+[[move_all_particles]] [[bounce_all_particles_off_walls]]
