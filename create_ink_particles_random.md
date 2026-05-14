@@ -6,18 +6,17 @@ description: Append count ink particles at random positions across the chamber; 
 
 # English
 
-Create `count` ink particles at random positions uniformly distributed across the chamber bounds (`0..state.width`, `0..state.height`). Each ink particle gets:
-- a fresh `id` continuing from the current max id in `state.particles` (incrementing sequentially: `max_id + 1, max_id + 2, ..., max_id + count`; if `state.particles` is empty, start from 0)
-- `type = 'ink'`
-- random `x` uniformly in `[0, state.width)`
-- random `y` uniformly in `[0, state.height)`
-- random `heading` uniformly in `[0, 2*pi)`
-- `speed` set to the medium speed constant via [[speed_for_temperature]] with `temperature='medium'`
-- `mass = 'medium'`
+Append `count` ink particles to `state` at random positions uniformly distributed across the chamber bounds (`0..state.width`, `0..state.height`). Use `numpy.concatenate` on each per-field array — no Python loops, no `Particle` construction.
 
-Returns a new `ParticleState` with the existing particles followed by the new ink particles appended; `tick` unchanged; `width` and `height` unchanged.
+- new ids: `numpy.arange(max_id + 1, max_id + 1 + count, dtype=numpy.int64)` where `max_id = int(state.ids.max()) if state.ids.size > 0 else -1`.
+- new types: `numpy.full(count, 'ink', dtype=object)`.
+- new xs: `numpy.random.uniform(0, state.width, count)`.
+- new ys: `numpy.random.uniform(0, state.height, count)`.
+- new headings: `numpy.random.uniform(0, 2 * math.pi, count)`.
+- new speeds: `numpy.full(count, speed)` where `speed` comes from `context.compute("speed_for_temperature", temperature='medium')`.
+- new masses: `numpy.full(count, 'medium', dtype=object)`.
 
-Use vectorized numpy for the random position, heading, and id draws — no Python for-loops for the math.
+Return a new `ParticleState` with the concatenated arrays. `tick`, `width`, and `height` carry through unchanged.
 
 # Python
 
@@ -25,30 +24,24 @@ Use vectorized numpy for the random position, heading, and id draws — no Pytho
 def compute(context, state, count):
     speed = context.compute("speed_for_temperature", temperature='medium')
 
-    existing = state.particles
-    max_id = int(numpy.max(numpy.array([p.id for p in existing]))) if existing else -1
-
-    new_ids = numpy.arange(max_id + 1, max_id + 1 + count)
-    xs = numpy.random.uniform(0, state.width, count)
-    ys = numpy.random.uniform(0, state.height, count)
-    headings = numpy.random.uniform(0, 2 * math.pi, count)
-
-    new_particles = [
-        Particle(
-            id=int(new_ids[i]),
-            type='ink',
-            x=float(xs[i]),
-            y=float(ys[i]),
-            heading=float(headings[i]),
-            speed=speed,
-            mass='medium',
-        )
-        for i in range(count)
-    ]
+    max_id = int(state.ids.max()) if state.ids.size > 0 else -1
+    new_ids = numpy.arange(max_id + 1, max_id + 1 + count, dtype=numpy.int64)
+    new_types = numpy.full(count, 'ink', dtype=object)
+    new_xs = numpy.random.uniform(0, state.width, count)
+    new_ys = numpy.random.uniform(0, state.height, count)
+    new_headings = numpy.random.uniform(0, 2 * math.pi, count)
+    new_speeds = numpy.full(count, speed)
+    new_masses = numpy.full(count, 'medium', dtype=object)
 
     return ParticleState(
         tick=state.tick,
-        particles=existing + new_particles,
+        ids=numpy.concatenate([state.ids, new_ids]),
+        types=numpy.concatenate([state.types, new_types]),
+        xs=numpy.concatenate([state.xs, new_xs]),
+        ys=numpy.concatenate([state.ys, new_ys]),
+        headings=numpy.concatenate([state.headings, new_headings]),
+        speeds=numpy.concatenate([state.speeds, new_speeds]),
+        masses=numpy.concatenate([state.masses, new_masses]),
         width=state.width,
         height=state.height,
     )

@@ -6,7 +6,13 @@ description: Initialize the simulation for the given scenario; reads the named s
 
 # English
 
-Initialize the simulation. Read the scenario data via `context.compute(scenario_id)` — the snippet ID is passed through from `/moda/init`. Call [[create_water_particles]] with the scenario's `water_count`, `width`, `height`, and `temperature` to produce the initial water particles. If the scenario's `ink_count` is greater than 0, also call [[create_ink_particles_random]] with that count, threading the water-only `ParticleState` through it so the ink ids continue past the water ids. Return a `ParticleState` with `tick=0`, all created particles, and the scenario's `width` and `height`.
+Initialize the simulation for the given `scenario_id`. Read the named scenario data snippet via `context.compute(scenario_id)` and extract `water_count`, `ink_count` (default 0), `width`, `height`, and `temperature`.
+
+Call [[create_water_particles]] with `count=water_count`, `width=width`, `height=height`, and `temperature=temperature` — that returns a fresh `ParticleState` containing only water rows, with `tick=0` and the scenario's chamber dimensions.
+
+If the scenario's `ink_count` is greater than 0, thread that state through [[create_ink_particles_random]] with `count=ink_count` so the resulting state has water followed by ink. Otherwise return the water-only state directly.
+
+Returns a `ParticleState`. No Python loops; no `Particle` construction.
 
 # Python
 
@@ -19,21 +25,10 @@ def compute(context, scenario_id):
     height = scenario["height"]
     temperature = scenario["temperature"]
 
-    water = context.compute(
-        "create_water_particles",
-        count=water_count,
-        width=width,
-        height=height,
-        temperature=temperature,
-    )
-    state = ParticleState(tick=0, particles=water, width=width, height=height)
+    state = context.compute("create_water_particles", count=water_count, width=width, height=height, temperature=temperature)
 
     if ink_count > 0:
-        state = context.compute(
-            "create_ink_particles_random",
-            state=state,
-            count=ink_count,
-        )
+        state = context.compute("create_ink_particles_random", state=state, count=ink_count)
 
     return state
 ```

@@ -6,54 +6,41 @@ description: Reflect particles that crossed canvas walls back into the canvas; p
 
 # English
 
-Inspect each particle's position relative to the canvas bounds (read `state.width` and `state.height`).
+Reflect any row whose position crossed a chamber wall. Compute two boolean masks against the chamber bounds (`state.width`, `state.height`):
 
-For any particle whose `x < 0` or `x > width`, reflect its heading across the vertical wall: `new_heading = pi - heading`.
+- `hit_x = (state.xs < 0) | (state.xs > state.width)`
+- `hit_y = (state.ys < 0) | (state.ys > state.height)`
 
-For any particle whose `y < 0` or `y > height`, reflect its heading across the horizontal wall: `new_heading = -heading`.
+Update headings vectorized: first `new_headings = numpy.where(hit_x, math.pi - state.headings, state.headings)`, then `new_headings = numpy.where(hit_y, -new_headings, new_headings)`, then normalize via `new_headings = new_headings % (2 * math.pi)`.
 
-Clamp the position back inside the bounds (`x = max(0, min(width, x))`, `y = max(0, min(height, y))`) so the particle sits on or just inside the wall.
+Clamp positions back inside the bounds with `numpy.clip(state.xs, 0, state.width)` and `numpy.clip(state.ys, 0, state.height)`.
 
-Speed and mass are unchanged.
-
-Returns a new `ParticleState` with positions and headings updated; `tick` unchanged.
-
-Operate on numpy arrays for detection, reflection, and clamping — do not use Python for-loops.
+`ids`, `types`, `speeds`, `masses`, `tick`, `width`, and `height` are carried through. Return the updated `ParticleState`. No Python loops.
 
 # Python
 
 ```python
 def compute(context, state):
-    particles = state.particles
-    if not particles:
-        return ParticleState(tick=state.tick, particles=[], width=state.width, height=state.height)
+    hit_x = (state.xs < 0) | (state.xs > state.width)
+    hit_y = (state.ys < 0) | (state.ys > state.height)
 
-    ids = numpy.array([p.id for p in particles])
-    types = [p.type for p in particles]
-    masses = [p.mass for p in particles]
-    xs = numpy.array([p.x for p in particles], dtype=float)
-    ys = numpy.array([p.y for p in particles], dtype=float)
-    headings = numpy.array([p.heading for p in particles], dtype=float)
-    speeds = numpy.array([p.speed for p in particles], dtype=float)
+    new_headings = numpy.where(hit_x, math.pi - state.headings, state.headings)
+    new_headings = numpy.where(hit_y, -new_headings, new_headings)
+    new_headings = new_headings % (2 * math.pi)
 
-    w = state.width
-    h = state.height
+    new_xs = numpy.clip(state.xs, 0, state.width)
+    new_ys = numpy.clip(state.ys, 0, state.height)
 
-    hit_x = (xs < 0) | (xs > w)
-    hit_y = (ys < 0) | (ys > h)
-
-    headings = numpy.where(hit_x, math.pi - headings, headings)
-    headings = numpy.where(hit_y, -headings, headings)
-    headings = headings % (2 * math.pi)
-
-    xs = numpy.clip(xs, 0, w)
-    ys = numpy.clip(ys, 0, h)
-
-    updated = [
-        Particle(id=int(ids[i]), type=types[i], x=float(xs[i]), y=float(ys[i]),
-                 heading=float(headings[i]), speed=float(speeds[i]), mass=masses[i])
-        for i in range(len(particles))
-    ]
-
-    return ParticleState(tick=state.tick, particles=updated, width=state.width, height=state.height)
+    return ParticleState(
+        tick=state.tick,
+        ids=state.ids,
+        types=state.types,
+        xs=new_xs,
+        ys=new_ys,
+        headings=new_headings,
+        speeds=state.speeds,
+        masses=state.masses,
+        width=state.width,
+        height=state.height,
+    )
 ```
