@@ -11,7 +11,7 @@ Append `count` ink particles to `state` at position `(x, y)`. Use `numpy.concate
 - new ids: `numpy.arange(max_id + 1, max_id + 1 + count, dtype=numpy.int64)` where `max_id = int(state.ids.max()) if state.ids.size > 0 else -1`.
 - new types: `numpy.full(count, 'ink', dtype=object)`.
 - new xs: `numpy.full(count, float(x))`. new ys: `numpy.full(count, float(y))`.
-- new headings: `numpy.random.uniform(0, 2 * math.pi, count)`.
+- new headings: every particle in this click shares **one** heading — draw a single scalar `h = float(numpy.random.uniform(0, 2 * math.pi))` and broadcast it via `numpy.full(count, h, dtype=float)`. (Per-particle random headings would make the ink spray radially from the click point like a starburst; a single shared heading makes the drop emerge as a coherent puff that then disperses naturally via `resolve_particle_collisions` when water particles bump into it.)
 - new speeds: `numpy.full(count, speed)` where `speed` comes from `context.compute("speed_for_temperature", temperature='medium')`.
 - new masses: `numpy.full(count, 'medium', dtype=object)`.
 
@@ -21,18 +21,16 @@ Return a new `ParticleState` whose arrays are the existing arrays concatenated w
 
 ```python
 def compute(context, state, x, y, count):
-    speed = context.compute("speed_for_temperature", temperature='medium')
-
     max_id = int(state.ids.max()) if state.ids.size > 0 else -1
-
     new_ids = numpy.arange(max_id + 1, max_id + 1 + count, dtype=numpy.int64)
     new_types = numpy.full(count, 'ink', dtype=object)
     new_xs = numpy.full(count, float(x))
     new_ys = numpy.full(count, float(y))
-    new_headings = numpy.random.uniform(0, 2 * math.pi, count)
+    h = float(numpy.random.uniform(0, 2 * math.pi))
+    new_headings = numpy.full(count, h, dtype=float)
+    speed = context.compute("speed_for_temperature", temperature='medium')
     new_speeds = numpy.full(count, speed)
     new_masses = numpy.full(count, 'medium', dtype=object)
-
     return ParticleState(
         tick=state.tick,
         ids=numpy.concatenate([state.ids, new_ids]),
