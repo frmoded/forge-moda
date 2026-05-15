@@ -12,7 +12,7 @@ Append `count` ink particles to `state` at position `(x, y)`. Use `numpy.concate
 - new types: `numpy.full(count, 'ink', dtype=object)`.
 - new xs: `numpy.full(count, float(x))`. new ys: `numpy.full(count, float(y))`.
 - new headings: every particle in this click shares **one** heading — draw a single scalar `h = float(numpy.random.uniform(0, 2 * math.pi))` and broadcast it via `numpy.full(count, h, dtype=float)`. (Per-particle random headings would make the ink spray radially from the click point like a starburst; a single shared heading makes the drop emerge as a coherent puff that then disperses naturally via `resolve_particle_collisions` when water particles bump into it.)
-- new speeds: `numpy.full(count, speed)` where `speed` comes from `context.compute("speed_for_temperature", temperature='medium')`.
+- new speeds: each particle gets its **own** small random initial speed — `numpy.random.uniform(0, 10, count)`. The 0–10 range is much smaller than typical water speed at medium temperature (50), so the puff drifts slowly while water moves past and collides with it. The per-particle speed spread also stretches the puff into a comet-like streak — faster particles outpace slower ones along the shared heading — which reads visually as a drop dispersing rather than a rigid block translating.
 - new masses: `numpy.full(count, 'medium', dtype=object)`.
 
 Return a new `ParticleState` whose arrays are the existing arrays concatenated with the new ones. `tick`, `width`, and `height` carry through unchanged.
@@ -28,8 +28,7 @@ def compute(context, state, x, y, count):
     new_ys = numpy.full(count, float(y))
     h = float(numpy.random.uniform(0, 2 * math.pi))
     new_headings = numpy.full(count, h, dtype=float)
-    speed = context.compute("speed_for_temperature", temperature='medium')
-    new_speeds = numpy.full(count, speed)
+    new_speeds = numpy.random.uniform(0, 10, count)
     new_masses = numpy.full(count, 'medium', dtype=object)
     return ParticleState(
         tick=state.tick,
@@ -44,9 +43,3 @@ def compute(context, state, x, y, count):
         height=state.height,
     )
 ```
-
-# Dependencies
-
-*Synced from Python. Edit the Python and regenerate, or run "Forge: Sync edges" to refresh.*
-
-[[speed_for_temperature]]
