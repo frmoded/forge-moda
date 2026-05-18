@@ -1,18 +1,50 @@
 ---
 type: action
-inputs: []
-description: Initialize the simulation with hardcoded defaults; produces the initial ParticleState.
+inputs: [temperature]
+description: "Block 1 — setup event. Create the water population and set its speed + mass."
 ---
 
 # English
 
-Initialize the simulation. Create 500 water particles in an 800×600 chamber at medium temperature: call [[create_water_particles]] with `count=500`, `width=800`, `height=600`, `temperature='medium'`. Return the resulting `ParticleState` directly. No scenario lookup; defaults are hardcoded for v1.
+Inputs: `temperature`
+
+Steps:
+1. Establish an empty chamber: a brand-new simulation state with no particles, 800 units wide and 600 units tall, tick 0. (These are the v1 defaults; there is no scenario lookup.)
+2. Call [[create_water_particles]].
+3. Call [[set_water_speed]] with `temperature`.
+4. Call [[set_water_mass]].
+
+This is the initial-population event and the ORIGIN of the simulation state — it takes no incoming state. It builds the empty 800×600 chamber itself (zero-length particle arrays), then threads that state through each call and returns the final state.
 
 # Python
 
 ```python
-def compute(context):
-    state = context.compute("create_water_particles", count=500, width=800, height=600, temperature='medium')
+def compute(context, temperature):
+    ids = numpy.array([], dtype=numpy.int64)
+    types = numpy.array([], dtype=object)
+    xs = numpy.array([], dtype=numpy.float64)
+    ys = numpy.array([], dtype=numpy.float64)
+    headings = numpy.array([], dtype=numpy.float64)
+    speeds = numpy.array([], dtype=numpy.float64)
+    masses = numpy.array([], dtype=object)
+
+    state = ParticleState(
+        tick=0,
+        ids=ids,
+        types=types,
+        xs=xs,
+        ys=ys,
+        headings=headings,
+        speeds=speeds,
+        masses=masses,
+        width=800.0,
+        height=600.0,
+    )
+
+    state = context.compute("create_water_particles", state=state)
+    state = context.compute("set_water_speed", state=state, temperature=temperature)
+    state = context.compute("set_water_mass", state=state)
+
     return state
 ```
 
@@ -20,4 +52,4 @@ def compute(context):
 
 *Synced from Python. Edit the Python and regenerate, or run "Forge: Sync edges" to refresh.*
 
-[[create_water_particles]]
+[[create_water_particles]] [[set_water_speed]] [[set_water_mass]]

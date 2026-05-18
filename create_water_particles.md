@@ -1,37 +1,50 @@
 ---
 type: action
-inputs: [count, width, height, temperature]
-description: Create count water particles placed randomly within an (0,0)-(width,height) rectangle.
+inputs: []
+description: "Block 2 — create 500 water particles at random positions with random headings."
 ---
 
 # English
 
-Create `count` water particles placed at random positions inside the chamber bounds `(0, 0)–(width, height)`. Build the per-field arrays in one vectorized pass:
+Inputs: None
 
-- `ids`: `numpy.arange(count, dtype=numpy.int64)` (so ids are `0..count-1`).
-- `types`: object array of `'water'` (`numpy.full(count, 'water', dtype=object)`).
-- `xs`: `numpy.random.uniform(0, width, count)`.
-- `ys`: `numpy.random.uniform(0, height, count)`.
-- `headings`: `numpy.random.uniform(0, 2 * math.pi, count)`.
-- `speeds`: filled with the scalar returned by [[speed_for_temperature]] for the given `temperature` (`numpy.full(count, speed)`).
-- `masses`: object array of `'medium'`.
+Steps:
+1. Create 500 water particles at random positions uniformly within the chamber bounds (`0..width`, `0..height`).
+2. Each particle gets a random heading uniformly in `[0, 2π)`.
 
-Return a `ParticleState` with `tick=0`, the assembled arrays, and the given `width` and `height`. Do not iterate; do not construct `Particle` objects.
+Water particles are appended to the simulation state. Ids continue sequentially from the current maximum id (start at 0 if the state is empty). Speed and mass are set by later blocks ([[set_water_speed]], [[set_water_mass]]); leave them at 0.0 / 'medium' placeholders here.
 
 # Python
 
 ```python
-def compute(context, count, width, height, temperature):
-    speed = context.compute("speed_for_temperature", temperature=temperature)
-    ids = numpy.arange(count, dtype=numpy.int64)
-    types = numpy.full(count, 'water', dtype=object)
-    xs = numpy.random.uniform(0, width, count)
-    ys = numpy.random.uniform(0, height, count)
-    headings = numpy.random.uniform(0, 2 * math.pi, count)
-    speeds = numpy.full(count, speed)
-    masses = numpy.full(count, 'medium', dtype=object)
+def compute(context, state):
+    count = 500
+    width = state.width
+    height = state.height
+
+    if len(state.ids) == 0:
+        max_id = -1
+    else:
+        max_id = int(state.ids.max())
+
+    new_ids = numpy.arange(max_id + 1, max_id + 1 + count)
+    new_types = numpy.full(count, 'water', dtype=object)
+    new_xs = numpy.random.uniform(0, width, count)
+    new_ys = numpy.random.uniform(0, height, count)
+    new_headings = numpy.random.uniform(0, 2 * math.pi, count)
+    new_speeds = numpy.zeros(count, dtype=numpy.float64)
+    new_masses = numpy.full(count, 'medium', dtype=object)
+
+    ids = numpy.concatenate([state.ids, new_ids])
+    types = numpy.concatenate([state.types, new_types])
+    xs = numpy.concatenate([state.xs, new_xs])
+    ys = numpy.concatenate([state.ys, new_ys])
+    headings = numpy.concatenate([state.headings, new_headings])
+    speeds = numpy.concatenate([state.speeds, new_speeds])
+    masses = numpy.concatenate([state.masses, new_masses])
+
     return ParticleState(
-        tick=0,
+        tick=state.tick,
         ids=ids,
         types=types,
         xs=xs,
@@ -43,9 +56,3 @@ def compute(context, count, width, height, temperature):
         height=height,
     )
 ```
-
-# Dependencies
-
-*Synced from Python. Edit the Python and regenerate, or run "Forge: Sync edges" to refresh.*
-
-[[speed_for_temperature]]
