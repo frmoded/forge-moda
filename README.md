@@ -11,11 +11,23 @@ forge-moda-client React app embedded in the plugin."]
 
 ## Install
 
-From any Forge-enabled Obsidian vault:
+The easiest path is via the Forge Obsidian plugin's UI:
 
+1. In a Forge-enabled vault, click the Forge ribbon icon.
+2. If the vault has no `forge.toml`: pick "MoDa" in the wizard.
+3. If it does: pick "Add domain to this vault…" → select "moda".
+
+The plugin will fetch this vault from the registry and install it as a
+subdirectory.
+
+For programmatic install from a snippet:
+
+```python
+context.compute("install", "forge-moda")
 ```
-[[install]] "forge-moda"
-```
+
+Don't have Forge installed in Obsidian yet? See
+[forge-client-obsidian](https://github.com/frmoded/forge-client-obsidian).
 
 ## Companion repo: forge-moda-client
 
