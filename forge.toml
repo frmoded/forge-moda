@@ -1,3 +1,4 @@
 name = "forge-moda"
-version = "0.3.1"
+version = "0.4.0"
 description = "Forge vault for agent-based simulation modeling, starting with diffusion."
+domains = ["moda"]
