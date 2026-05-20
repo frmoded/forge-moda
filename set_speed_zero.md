@@ -1,5 +1,6 @@
 ---
 type: action
+role: leaf
 inputs: []
 description: "Block 25 — action: set water particle speed to zero."
 ---

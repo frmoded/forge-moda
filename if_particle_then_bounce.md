@@ -1,5 +1,6 @@
 ---
 type: action
+role: leaf
 inputs: [pairs]
 description: "Block 15 — control: for colliding pairs, bounce them off each other."
 generation_notes: |

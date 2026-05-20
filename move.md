@@ -1,5 +1,6 @@
 ---
 type: action
+role: leaf
 inputs: [dt]
 description: "Block 11 — action: advance each particle by speed × dt along its heading."
 ---

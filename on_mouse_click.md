@@ -1,5 +1,6 @@
 ---
 type: action
+role: root
 inputs: [x, y]
 description: "Block 5 — mouse-click event. Create ink at the cursor and set its speed + mass."
 ---

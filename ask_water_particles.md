@@ -1,5 +1,6 @@
 ---
 type: action
+role: leaf
 inputs: [temperature]
 description: "Block 17 — control: tell water particles to update speed for the temperature."
 ---

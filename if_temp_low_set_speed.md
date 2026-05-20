@@ -1,5 +1,6 @@
 ---
 type: action
+role: leaf
 inputs: [temperature]
 description: "Block 22 — control: if temperature is low, set water speed low."
 ---

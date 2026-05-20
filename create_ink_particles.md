@@ -1,5 +1,6 @@
 ---
 type: action
+role: leaf
 inputs: [x, y]
 description: "Block 6 — create 50 ink particles at the click position with random headings."
 ---

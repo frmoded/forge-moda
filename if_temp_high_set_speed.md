@@ -1,5 +1,6 @@
 ---
 type: action
+role: leaf
 inputs: [temperature]
 description: "Block 18 — control: if temperature is high, set water speed high."
 ---

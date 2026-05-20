@@ -1,5 +1,6 @@
 ---
 type: action
+role: leaf
 inputs: []
 description: "Block 7 — set every ink particle's speed to the medium constant."
 ---

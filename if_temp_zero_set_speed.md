@@ -1,5 +1,6 @@
 ---
 type: action
+role: leaf
 inputs: [temperature]
 description: "Block 24 — control: if temperature is zero, set water speed zero."
 ---

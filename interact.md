@@ -1,5 +1,6 @@
 ---
 type: action
+role: leaf
 inputs: []
 description: "Block 12 — action: find every colliding pair this tick and resolve them."
 generation_notes: |

@@ -1,5 +1,6 @@
 ---
 type: action
+role: root
 inputs: [temperature]
 description: "Block 1 — setup event. Create the water population and set its speed + mass."
 ---

@@ -1,5 +1,6 @@
 ---
 type: action
+role: leaf
 inputs: []
 description: "Block 21 — action: set water particle speed to the medium constant."
 ---

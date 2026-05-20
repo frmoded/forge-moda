@@ -1,5 +1,6 @@
 ---
 type: action
+role: leaf
 inputs: [temperature]
 description: "Block 3 — set every water particle's speed from the temperature."
 ---

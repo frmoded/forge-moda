@@ -1,5 +1,6 @@
 ---
 type: action
+role: root
 inputs: [state, dt, temperature]
 description: "Block 9 — go event. One simulation tick; history-dependent per C8 (reads its own prior snapshot to accumulate)."
 generation_notes: |

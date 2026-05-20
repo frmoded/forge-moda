@@ -1,5 +1,6 @@
 ---
 type: action
+role: leaf
 inputs: [dt]
 description: "Block 10 — control: tell every particle to move, wall-bounce, and interact."
 ---

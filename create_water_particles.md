@@ -1,5 +1,6 @@
 ---
 type: action
+role: leaf
 inputs: []
 description: "Block 2 — create 500 water particles at random positions with random headings."
 ---

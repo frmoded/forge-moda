@@ -1,5 +1,6 @@
 ---
 type: action
+role: leaf
 inputs: []
 description: "Block 13 — control: if a particle touches a wall, bounce it."
 ---

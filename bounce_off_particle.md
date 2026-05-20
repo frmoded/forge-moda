@@ -1,5 +1,6 @@
 ---
 type: action
+role: leaf
 inputs: [pairs]
 description: "Block 16 — action: swap headings within each colliding pair."
 generation_notes: |

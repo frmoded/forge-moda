@@ -1,5 +1,6 @@
 ---
 type: action
+role: leaf
 inputs: [temperature]
 description: Returns a speed value (simulation units per second) for a given temperature level.
 ---

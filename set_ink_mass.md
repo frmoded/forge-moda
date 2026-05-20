@@ -1,5 +1,6 @@
 ---
 type: action
+role: leaf
 inputs: []
 description: "Block 8 — set every ink particle's mass to medium."
 ---

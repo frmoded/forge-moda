@@ -1,5 +1,6 @@
 ---
 type: action
+role: leaf
 inputs: []
 description: "Block 14 — action: reflect a wall-touching particle's heading back inside."
 ---
