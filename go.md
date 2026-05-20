@@ -16,15 +16,12 @@ generation_notes: |
 
 Inputs: state (optional), dt (optional), temperature (optional)
 
-**History-dependent per constitution C8.** go accumulates state across invocations rather than being a pure function of its inputs. Resolution order for the starting state:
+History-dependent per C8. State resolution order:
+  - If `state` is explicitly provided, use it.
+  - Otherwise read the latest snapshot via `context.read_snapshot()` and continue accumulating from the previous tick.
+  - Otherwise (first call, no prior snapshot) fall back to `sample_state`.
 
-If state is explicitly provided (not None and not empty), use it as given — an explicit input always wins and bypasses the snapshot/fallback chain entirely.
-Otherwise read the most recent snapshot of go itself via context.read_snapshot() and continue accumulating from the previous tick's result.
-Otherwise (no prior snapshot — first call in a fresh vault) fall back to sample_state.
-
-Defaults when omitted: state → None (triggers the snapshot → sample_state fallback chain), dt → 1/30, temperature → "medium".
-
-Then advance the simulation by one time step:
+Defaults when omitted: `state` → None, `dt` → 1/30, `temperature` → "medium".
 
 Call ask_all_particles with dt.
 Call ask_water_particles with temperature.
