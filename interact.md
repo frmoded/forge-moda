@@ -2,6 +2,16 @@
 type: action
 inputs: []
 description: "Block 12 — action: find every colliding pair this tick and resolve them."
+generation_notes: |
+  Compute the colliding-pair array ONCE for the whole state and thread
+  it via context.compute("if_particle_then_bounce", state=state, pairs=pairs).
+  Two particles collide when they are within 5 units AND their separation
+  is shrinking: (pos_j - pos_i) · (vel_j - vel_i) < 0. Use
+  numpy.triu_indices(N, k=1) for the candidate index pairs, then mask by
+  the distance + approach-direction predicates. The resulting `pairs` is
+  an (M, 2) int64 array of (i, j) row indices into the state arrays.
+  Downstream blocks treat `pairs` as a black-box input — do not
+  recompute the predicate, do not re-derive shapes.
 ---
 
 # English
@@ -11,7 +21,10 @@ Inputs: None
 For each other particle in state:
 Call if_particle_then_bounce.
 
-Domain realization (vectorized, deviates from a naive pairwise loop — sanctioned): compute the full set of colliding `(i, j)` pairs ONCE for the whole state — two particles collide when they are within the collision distance (5 units) AND their separation is currently shrinking (`(pos_j − pos_i) · (vel_j − vel_i) < 0`). The approach-direction term is a deliberate addition to a plain distance test: without it, just-swapped pairs stay within range, re-collide every tick, and freeze into stuck clusters (empirically 85.7% → 3.5% recurrence with the filter). Pass this colliding-pair array to if_particle_then_bounce and thread the state forward. "the other particle" is the second column of the pair array, never a scalar loop variable.
+The collision check uses a shrinking-separation filter alongside the
+distance test — without that filter, just-swapped pairs stay within
+range, re-collide every tick, and freeze into stuck clusters (empirically
+85.7% → 3.5% recurrence with the filter).
 
 # Python
 

@@ -2,6 +2,13 @@
 type: action
 inputs: [state, dt, temperature]
 description: "Block 9 — go event. One simulation tick; history-dependent per C8 (reads its own prior snapshot to accumulate)."
+generation_notes: |
+  Keep go a pass-through (return the last context.compute result
+  directly) — do NOT post-process state after the last call. The
+  snapshot-default reads go's outbound edge directory, which equals
+  the terminal callee's return only while go stays pass-through.
+  Any post-processing (e.g. state.tick += 1) would cause
+  read_snapshot() to lag the true return by one tick.
 ---
 
 # English
@@ -11,17 +18,15 @@ Inputs: state (optional), dt (optional), temperature (optional)
 **History-dependent per constitution C8.** go accumulates state across invocations rather than being a pure function of its inputs. Resolution order for the starting state:
 
 If state is explicitly provided (not None and not empty), use it as given — an explicit input always wins and bypasses the snapshot/fallback chain entirely.
-Otherwise read the most recent snapshot of go itself via `context.read_snapshot()` and continue accumulating from the previous tick's result.
-Otherwise (no prior snapshot — first call in a fresh vault) fall back to the sample_state data snippet via `context.compute`.
+Otherwise read the most recent snapshot of go itself via context.read_snapshot() and continue accumulating from the previous tick's result.
+Otherwise (no prior snapshot — first call in a fresh vault) fall back to sample_state.
 
-Defaults when omitted: state → None (triggers the snapshot → sample_state fallback chain), dt → `1/30`, temperature → `"medium"`.
+Defaults when omitted: state → None (triggers the snapshot → sample_state fallback chain), dt → 1/30, temperature → "medium".
 
 Then advance the simulation by one time step:
 
 Call ask_all_particles with dt.
 Call ask_water_particles with temperature.
-
-**Known limitation of the snapshot-default (option A).** `context.read_snapshot()` returns the latest capture in go's *outbound* edge directory — for go this works only because go is a pass-through whose return value equals its terminal callee's (ask_water_particles) return. If go is ever refactored to post-process the state after the last `context.compute` (e.g. `state.tick += 1; return state`), the snapshot read would lag the true return by that post-processing (one tick). Keep go a pass-through, or revisit the engine's snapshot-of-self mechanism. The C8 opt-out applies regardless.
 
 # Python
 

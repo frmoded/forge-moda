@@ -2,6 +2,13 @@
 type: action
 inputs: [pairs]
 description: "Block 16 — action: swap headings within each colliding pair."
+generation_notes: |
+  `pairs` is an (M, 2) int64 array passed in from the control chain —
+  parameter, never fetched via context.compute. Use vectorized fancy
+  indexing: snapshot headings first (state.headings.copy()), then assign
+  headings[i] = state.headings[j] and headings[j] = state.headings[i]
+  so both sides read pre-swap values. Speed, position, type, mass, id,
+  tick all unchanged. If pairs.shape[0] == 0 return state unchanged.
 ---
 
 # English
@@ -10,7 +17,8 @@ Inputs: None
 
 Swap headings between the current particle and the other particle.
 
-Operates on the colliding-pair array pairs (an (M, 2) integer array of `(i, j)` index pairs) passed in from the control chain — it is a parameter, never fetched via context.compute. For every pair `(i, j)`: particle i takes particle j's pre-swap heading and vice versa, applied with vectorized fancy indexing on a snapshot copy of the headings (so both sides read pre-swap values). Speed is unchanged, so kinetic energy is conserved exactly. Positions, types, masses, ids, tick unchanged. If pairs is empty, return the state unchanged.
+Speed is unchanged, so kinetic energy is conserved exactly. Positions,
+types, masses, ids, tick all unchanged.
 
 # Python
 
