@@ -10,8 +10,6 @@ Inputs: temperature
 
 If `temperature == "high"`: call set_speed_high.
 
-Control block: dispatch only. If the temperature does not match, return the state unchanged. Otherwise call set_speed_high once and return its result.
-
 # Python
 
 ```python

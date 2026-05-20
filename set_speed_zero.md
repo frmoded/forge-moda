@@ -10,7 +10,7 @@ Inputs: None
 
 Set the current water particle's speed to the zero speed constant, obtained via speed_for_temperature with `temperature='zero'`.
 
-Applies to water particles only (derive the water boolean mask). Ink untouched. Other fields unchanged.
+Applies to water particles only. Ink untouched. Other fields unchanged.
 
 # Python
 

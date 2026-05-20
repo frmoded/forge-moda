@@ -13,8 +13,6 @@ Call move with dt.
 Call if_wall_then_bounce.
 Call interact.
 
-This is a control/scope block: pure dispatch. It does NOT iterate particles in Python — it calls each peer block once with the whole state and threads the returned state forward. The called blocks do the vectorized per-particle work internally.
-
 # Python
 
 ```python

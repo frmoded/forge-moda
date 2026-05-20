@@ -10,7 +10,7 @@ Inputs: dt
 
 Advance the current particle's position by `speed × dt` in the direction of its heading: `x += speed·cos(heading)·dt`, `y += speed·sin(heading)·dt`.
 
-Applies to every particle (the ambient population). Heading, speed, type, mass unchanged. This is the block that advances the tick counter by 1.
+Applies to every particle. Heading, speed, type, mass unchanged. This is the block that advances the tick counter by 1.
 
 # Python
 

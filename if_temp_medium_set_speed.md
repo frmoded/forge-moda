@@ -10,8 +10,6 @@ Inputs: temperature
 
 If `temperature == "medium"`: call set_speed_medium.
 
-Control block: dispatch only. If the temperature does not match, return the state unchanged. Otherwise call set_speed_medium once and return its result.
-
 # Python
 
 ```python

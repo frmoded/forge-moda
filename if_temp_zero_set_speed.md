@@ -8,9 +8,7 @@ description: "Block 24 — control: if temperature is zero, set water speed zero
 
 Inputs: temperature
 
-If `temperature == "zero"`: call set_speed_zero, passing the current simulation state through to it, and return its result.
-
-Control block: dispatch only. If the temperature does not match, return the state unchanged. When it matches, invoke set_speed_zero with `state=state` (the callee requires the state argument) and return exactly what it returns.
+If `temperature == "zero"`: call set_speed_zero.
 
 # Python
 

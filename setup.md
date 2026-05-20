@@ -13,7 +13,7 @@ Call create_water_particles.
 Call set_water_speed with temperature.
 Call set_water_mass.
 
-This is the initial-population event and the ORIGIN of the simulation state — it takes no incoming state. It builds the empty 800×600 chamber itself (zero-length particle arrays), then threads that state through each call and returns the final state.
+This is the initial-population event and the ORIGIN of the simulation state — it takes no incoming state. It builds the empty 800×600 chamber itself.
 
 # Python
 
