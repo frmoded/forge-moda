@@ -6,12 +6,11 @@ description: "Block 22 — control: if temperature is low, set water speed low."
 
 # English
 
-Inputs: `temperature`
+Inputs: temperature
 
-Steps:
-1. If `temperature == "low"`: call [[set_speed_low]].
+If `temperature == "low"`: call set_speed_low.
 
-Control block: dispatch only. If the temperature does not match, return the state unchanged. Otherwise call [[set_speed_low]] once and return its result.
+Control block: dispatch only. If the temperature does not match, return the state unchanged. Otherwise call set_speed_low once and return its result.
 
 # Python
 

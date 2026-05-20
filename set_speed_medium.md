@@ -8,8 +8,7 @@ description: "Block 21 — action: set water particle speed to the medium consta
 
 Inputs: None
 
-Steps:
-1. Set the current water particle's speed to the medium speed constant, obtained via [[speed_for_temperature]] with `temperature='medium'`.
+Set the current water particle's speed to the medium speed constant, obtained via speed_for_temperature with `temperature='medium'`.
 
 Applies to water particles only (derive the water boolean mask). Ink untouched. Other fields unchanged.
 

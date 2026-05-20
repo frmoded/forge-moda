@@ -8,11 +8,10 @@ description: "Block 12 — action: find every colliding pair this tick and resol
 
 Inputs: None
 
-Steps:
 For each other particle in state:
-1. Call [[if_particle_then_bounce]].
+Call if_particle_then_bounce.
 
-Domain realization (vectorized, deviates from a naive pairwise loop — sanctioned): compute the full set of colliding `(i, j)` pairs ONCE for the whole state — two particles collide when they are within the collision distance (5 units) AND their separation is currently shrinking (`(pos_j − pos_i) · (vel_j − vel_i) < 0`). The approach-direction term is a deliberate addition to a plain distance test: without it, just-swapped pairs stay within range, re-collide every tick, and freeze into stuck clusters (empirically 85.7% → 3.5% recurrence with the filter). Pass this colliding-pair array to [[if_particle_then_bounce]] and thread the state forward. "the other particle" is the second column of the pair array, never a scalar loop variable.
+Domain realization (vectorized, deviates from a naive pairwise loop — sanctioned): compute the full set of colliding `(i, j)` pairs ONCE for the whole state — two particles collide when they are within the collision distance (5 units) AND their separation is currently shrinking (`(pos_j − pos_i) · (vel_j − vel_i) < 0`). The approach-direction term is a deliberate addition to a plain distance test: without it, just-swapped pairs stay within range, re-collide every tick, and freeze into stuck clusters (empirically 85.7% → 3.5% recurrence with the filter). Pass this colliding-pair array to if_particle_then_bounce and thread the state forward. "the other particle" is the second column of the pair array, never a scalar loop variable.
 
 # Python
 

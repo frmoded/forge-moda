@@ -6,13 +6,12 @@ description: "Block 6 — create 50 ink particles at the click position with ran
 
 # English
 
-Inputs: `x`, `y`
+Inputs: x, y
 
-Steps:
-1. Create 50 ink particles at position `(x, y)`.
-2. Each particle gets a random heading. All 50 particles in one click share a single randomly-drawn heading (so the drop emerges as a coherent puff, not a radial starburst), and each gets its own small random initial speed in `[0, 10)`.
+Create 50 ink particles at position `(x, y)`.
+Each particle gets a random heading. All 50 particles in one click share a single randomly-drawn heading (so the drop emerges as a coherent puff, not a radial starburst), and each gets its own small random initial speed in `[0, 10)`.
 
-Ink particles are appended to the simulation state; ids continue sequentially from the current maximum id. Mass is set by [[set_ink_mass]]; leave it at a 'medium' placeholder here.
+Ink particles are appended to the simulation state; ids continue sequentially from the current maximum id. Mass is set by set_ink_mass; leave it at a 'medium' placeholder here.
 
 # Python
 

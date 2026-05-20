@@ -8,8 +8,7 @@ description: "Block 19 — action: set water particle speed to the high constant
 
 Inputs: None
 
-Steps:
-1. Set the current water particle's speed to the high speed constant, obtained via [[speed_for_temperature]] with `temperature='high'`.
+Set the current water particle's speed to the high speed constant, obtained via speed_for_temperature with `temperature='high'`.
 
 Applies to water particles only (derive the water boolean mask). Ink untouched. Other fields unchanged.
 

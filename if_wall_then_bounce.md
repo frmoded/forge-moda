@@ -8,10 +8,9 @@ description: "Block 13 — control: if a particle touches a wall, bounce it."
 
 Inputs: None
 
-Steps:
-1. If the current particle is touching a wall (its position is at or past any chamber bound): call [[bounce_off_wall]].
+If the current particle is touching a wall (its position is at or past any chamber bound): call bounce_off_wall.
 
-Control block: dispatch only. Call [[bounce_off_wall]] once with the whole state; it applies the wall test as a vectorized mask internally and threads the state forward.
+Control block: dispatch only. Call bounce_off_wall once with the whole state; it applies the wall test as a vectorized mask internally and threads the state forward.
 
 # Python
 

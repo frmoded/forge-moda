@@ -8,8 +8,7 @@ description: "Block 7 — set every ink particle's speed to the medium constant.
 
 Inputs: None
 
-Steps:
-1. Set the speed of all ink particles to the medium speed constant, obtained via [[speed_for_temperature]] with `temperature='medium'`.
+Set the speed of all ink particles to the medium speed constant, obtained via speed_for_temperature with `temperature='medium'`.
 
 Water particles are untouched.
 

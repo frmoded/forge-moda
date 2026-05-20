@@ -6,10 +6,9 @@ description: "Block 3 — set every water particle's speed from the temperature.
 
 # English
 
-Inputs: `temperature`
+Inputs: temperature
 
-Steps:
-1. Set the speed of all water particles to `speed_for_temperature(temperature)` via [[speed_for_temperature]].
+Set the speed of all water particles to `speed_for_temperature(temperature)` via speed_for_temperature.
 
 Ink particles are untouched.
 

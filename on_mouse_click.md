@@ -6,14 +6,11 @@ description: "Block 5 — mouse-click event. Create ink at the cursor and set it
 
 # English
 
-Inputs: `x`, `y`
+Inputs: x, y
 
-Steps:
-1. Call [[create_ink_particles]] with `x` and `y`.
-2. Call [[set_ink_speed]].
-3. Call [[set_ink_mass]].
-
-Thread the simulation state forward through each step.
+Call create_ink_particles with x and y.
+Call set_ink_speed.
+Call set_ink_mass.
 
 # Python
 

@@ -8,10 +8,9 @@ description: "Block 16 — action: swap headings within each colliding pair."
 
 Inputs: None
 
-Steps:
-1. Swap headings between the current particle and the other particle.
+Swap headings between the current particle and the other particle.
 
-Operates on the colliding-pair array `pairs` (an (M, 2) integer array of `(i, j)` index pairs) passed in from the control chain — it is a parameter, never fetched via context.compute. For every pair `(i, j)`: particle `i` takes particle `j`'s pre-swap heading and vice versa, applied with vectorized fancy indexing on a snapshot copy of the headings (so both sides read pre-swap values). Speed is unchanged, so kinetic energy is conserved exactly. Positions, types, masses, ids, tick unchanged. If `pairs` is empty, return the state unchanged.
+Operates on the colliding-pair array pairs (an (M, 2) integer array of `(i, j)` index pairs) passed in from the control chain — it is a parameter, never fetched via context.compute. For every pair `(i, j)`: particle i takes particle j's pre-swap heading and vice versa, applied with vectorized fancy indexing on a snapshot copy of the headings (so both sides read pre-swap values). Speed is unchanged, so kinetic energy is conserved exactly. Positions, types, masses, ids, tick unchanged. If pairs is empty, return the state unchanged.
 
 # Python
 

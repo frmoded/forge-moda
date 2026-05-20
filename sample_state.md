@@ -7,7 +7,7 @@ description: Sample initial ParticleState for go's snapshot-default fallback. 20
 
 # English
 
-A known starting `ParticleState` used by `go` as the fallback when no prior snapshot exists. Roughly 20 water particles and 5 ink particles randomly distributed in an 800x600 chamber, tick=0, all at medium speed. Intended for /compute go preview/exploration; not used by the live `/moda/init` path.
+A known starting ParticleState used by go as the fallback when no prior snapshot exists. Roughly 20 water particles and 5 ink particles randomly distributed in an 800x600 chamber, tick=0, all at medium speed. Intended for /compute go preview/exploration; not used by the live `/moda/init` path.
 
 # Body
 

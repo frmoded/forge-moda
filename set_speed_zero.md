@@ -8,8 +8,7 @@ description: "Block 25 — action: set water particle speed to zero."
 
 Inputs: None
 
-Steps:
-1. Set the current water particle's speed to the zero speed constant, obtained via [[speed_for_temperature]] with `temperature='zero'`.
+Set the current water particle's speed to the zero speed constant, obtained via speed_for_temperature with `temperature='zero'`.
 
 Applies to water particles only (derive the water boolean mask). Ink untouched. Other fields unchanged.
 

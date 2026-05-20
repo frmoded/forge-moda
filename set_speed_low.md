@@ -8,8 +8,7 @@ description: "Block 23 — action: set water particle speed to the low constant.
 
 Inputs: None
 
-Steps:
-1. Set the current water particle's speed to the low speed constant, obtained via [[speed_for_temperature]] with `temperature='low'`.
+Set the current water particle's speed to the low speed constant, obtained via speed_for_temperature with `temperature='low'`.
 
 Applies to water particles only (derive the water boolean mask). Ink untouched. Other fields unchanged.
 

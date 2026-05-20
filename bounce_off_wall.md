@@ -8,8 +8,7 @@ description: "Block 14 — action: reflect a wall-touching particle's heading ba
 
 Inputs: None
 
-Steps:
-1. Reflect the current particle's heading off the wall it's touching: across the vertical walls (`x < 0` or `x > width`) `heading → π − heading`; across the horizontal walls (`y < 0` or `y > height`) `heading → −heading`; normalize modulo `2π`. Clamp the position back inside the bounds.
+Reflect the current particle's heading off the wall it's touching: across the vertical walls (`x < 0` or `x > width`) `heading → π − heading`; across the horizontal walls (`y < 0` or `y > height`) `heading → −heading`; normalize modulo `2π`. Clamp the position back inside the bounds.
 
 Applies only to particles actually touching a wall (derive that boolean mask from the positions); particles inside the chamber are unchanged. Speed, mass, type unchanged.
 

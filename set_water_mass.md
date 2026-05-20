@@ -8,8 +8,7 @@ description: "Block 4 — set every water particle's mass to medium."
 
 Inputs: None
 
-Steps:
-1. Set the mass of all water particles to `'medium'`.
+Set the mass of all water particles to `'medium'`.
 
 Ink particles are untouched.
 

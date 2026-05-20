@@ -8,11 +8,10 @@ description: "Block 2 — create 500 water particles at random positions with ra
 
 Inputs: None
 
-Steps:
-1. Create 500 water particles at random positions uniformly within the chamber bounds (`0..width`, `0..height`).
-2. Each particle gets a random heading uniformly in `[0, 2π)`.
+Create 500 water particles at random positions uniformly within the chamber bounds (`0..width`, `0..height`).
+Each particle gets a random heading uniformly in `[0, 2π)`.
 
-Water particles are appended to the simulation state. Ids continue sequentially from the current maximum id (start at 0 if the state is empty). Speed and mass are set by later blocks ([[set_water_speed]], [[set_water_mass]]); leave them at 0.0 / 'medium' placeholders here.
+Water particles are appended to the simulation state. Ids continue sequentially from the current maximum id (start at 0 if the state is empty). Speed and mass are set by later blocks (set_water_speed, set_water_mass); leave them at 0.0 / 'medium' placeholders here.
 
 # Python
 

@@ -6,14 +6,13 @@ description: "Block 17 — control: tell water particles to update speed for the
 
 # English
 
-Inputs: `temperature`
+Inputs: temperature
 
-Steps:
 For each water particle in state:
-1. Call [[if_temp_high_set_speed]] with `temperature`.
-2. Call [[if_temp_medium_set_speed]] with `temperature`.
-3. Call [[if_temp_low_set_speed]] with `temperature`.
-4. Call [[if_temp_zero_set_speed]] with `temperature`.
+Call if_temp_high_set_speed with temperature.
+Call if_temp_medium_set_speed with temperature.
+Call if_temp_low_set_speed with temperature.
+Call if_temp_zero_set_speed with temperature.
 
 Control block: pure dispatch. Call each peer once with the whole state and thread the state forward. No Python loop; the water mask is applied by the downstream set-speed blocks.
 
