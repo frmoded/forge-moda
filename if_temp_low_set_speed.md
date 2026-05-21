@@ -9,7 +9,8 @@ description: "Block 22 — control: if temperature is low, set water speed low."
 
 Inputs: temperature
 
-If `temperature == "low"`: call set_speed_low.
+If `temperature == "low"`:
+  Call [[set_speed_low]].
 
 # Python
 

@@ -10,9 +10,9 @@ description: "Block 10 — control: tell every particle to move, wall-bounce, an
 Inputs: dt
 
 For each particle in state:
-Call move with dt.
-Call if_wall_then_bounce.
-Call interact.
+  Call [[move]] with dt.
+  Call [[if_wall_then_bounce]].
+  Call [[interact]].
 
 # Python
 

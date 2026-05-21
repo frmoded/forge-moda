@@ -9,7 +9,8 @@ description: "Block 13 — control: if a particle touches a wall, bounce it."
 
 Inputs: None
 
-If the current particle is touching a wall (its position is at or past any chamber bound): call bounce_off_wall.
+If the current particle is touching a wall (its position is at or past any chamber bound):
+  Call [[bounce_off_wall]].
 
 # Python
 

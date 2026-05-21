@@ -20,7 +20,7 @@ generation_notes: |
 Inputs: None
 
 For each other particle in state:
-Call if_particle_then_bounce.
+  Call [[if_particle_then_bounce]].
 
 The collision check uses a shrinking-separation filter alongside the
 distance test — without that filter, just-swapped pairs stay within

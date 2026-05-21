@@ -9,7 +9,8 @@ description: "Block 24 — control: if temperature is zero, set water speed zero
 
 Inputs: temperature
 
-If `temperature == "zero"`: call set_speed_zero.
+If `temperature == "zero"`:
+  Call [[set_speed_zero]].
 
 # Python
 

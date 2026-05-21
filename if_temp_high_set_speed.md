@@ -9,7 +9,8 @@ description: "Block 18 — control: if temperature is high, set water speed high
 
 Inputs: temperature
 
-If `temperature == "high"`: call set_speed_high.
+If `temperature == "high"`:
+  Call [[set_speed_high]].
 
 # Python
 

@@ -15,7 +15,8 @@ generation_notes: |
 
 Inputs: None
 
-If the current particle is colliding with the other particle: call bounce_off_particle.
+If the current particle is colliding with the other particle:
+  Call [[bounce_off_particle]].
 
 # Python
 

@@ -10,9 +10,9 @@ description: "Block 1 — setup event. Create the water population and set its s
 Inputs: temperature
 
 Establish an empty chamber: a brand-new simulation state with no particles, 800 units wide and 600 units tall, tick 0. (These are the v1 defaults; there is no scenario lookup.)
-Call create_water_particles.
-Call set_water_speed with temperature.
-Call set_water_mass.
+Call [[create_water_particles]].
+Call [[set_water_speed]] with temperature.
+Call [[set_water_mass]].
 
 This is the initial-population event and the ORIGIN of the simulation state — it takes no incoming state. It builds the empty 800×600 chamber itself.
 

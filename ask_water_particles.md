@@ -10,10 +10,10 @@ description: "Block 17 — control: tell water particles to update speed for the
 Inputs: temperature
 
 For each water particle in state:
-Call if_temp_high_set_speed with temperature.
-Call if_temp_medium_set_speed with temperature.
-Call if_temp_low_set_speed with temperature.
-Call if_temp_zero_set_speed with temperature.
+  Call [[if_temp_high_set_speed]] with temperature.
+  Call [[if_temp_medium_set_speed]] with temperature.
+  Call [[if_temp_low_set_speed]] with temperature.
+  Call [[if_temp_zero_set_speed]] with temperature.
 
 # Python
 

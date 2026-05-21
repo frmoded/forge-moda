@@ -9,9 +9,9 @@ description: "Block 5 — mouse-click event. Create ink at the cursor and set it
 
 Inputs: x, y
 
-Call create_ink_particles with x and y.
-Call set_ink_speed.
-Call set_ink_mass.
+Call [[create_ink_particles]] with x and y.
+Call [[set_ink_speed]].
+Call [[set_ink_mass]].
 
 # Python
 

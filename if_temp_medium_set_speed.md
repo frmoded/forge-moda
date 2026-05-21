@@ -9,7 +9,8 @@ description: "Block 20 — control: if temperature is medium, set water speed me
 
 Inputs: temperature
 
-If `temperature == "medium"`: call set_speed_medium.
+If `temperature == "medium"`:
+  Call [[set_speed_medium]].
 
 # Python
 

@@ -10,21 +10,24 @@ generation_notes: |
   the terminal callee's return only while go stays pass-through.
   Any post-processing (e.g. state.tick += 1) would cause
   read_snapshot() to lag the true return by one tick.
+
+  State resolution order (history-dependent per C8):
+    - If `state` is explicitly provided, use it.
+    - Otherwise read the latest snapshot via
+      `context.read_snapshot()` and continue accumulating from the
+      previous tick.
+    - Otherwise (first call, no prior snapshot) fall back to
+      `sample_state`.
 ---
 
 # English
 
 Inputs: state (optional), dt (optional), temperature (optional)
 
-History-dependent per C8. State resolution order:
-  - If `state` is explicitly provided, use it.
-  - Otherwise read the latest snapshot via `context.read_snapshot()` and continue accumulating from the previous tick.
-  - Otherwise (first call, no prior snapshot) fall back to `sample_state`.
-
 Defaults when omitted: `state` → None, `dt` → 1/30, `temperature` → "medium".
 
-Call ask_all_particles with dt.
-Call ask_water_particles with temperature.
+Call [[ask_all_particles]] with dt.
+Call [[ask_water_particles]] with temperature.
 
 # Python
 
