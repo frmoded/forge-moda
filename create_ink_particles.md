@@ -9,10 +9,9 @@ description: "Block 6 — create 50 ink particles at the click position with ran
 
 Inputs: x, y
 
-Create 50 ink particles at position `(x, y)`.
-Each particle gets a random heading. All 50 particles in one click share a single randomly-drawn heading (so the drop emerges as a coherent puff, not a radial starburst), and each gets its own small random initial speed in `[0, 10)`.
+Create 50 ink particles near position `(x, y)`. Each particle gets a small position jitter (within ±3 units of the click) and its own random heading uniform in `[0, 2π)`, so the drop disperses radially from the click point. Each gets a small random initial speed in `[0, 10)`.
 
-Ink particles are appended to the simulation state; ids continue sequentially from the current maximum id. Mass is set by set_ink_mass; leave it at a 'medium' placeholder here.
+Ink particles are appended to the simulation state; ids continue sequentially from the current maximum id. Mass is set by [[set_ink_mass]]; leave it at a 'medium' placeholder here.
 
 # Python
 
@@ -22,10 +21,9 @@ def compute(context, state, x, y):
     max_id = state.ids.max() if len(state.ids) > 0 else -1
     new_ids = numpy.arange(max_id + 1, max_id + 1 + count)
     new_types = numpy.full(count, 'ink', dtype=object)
-    new_xs = numpy.full(count, float(x))
-    new_ys = numpy.full(count, float(y))
-    shared_heading = random.uniform(0, 2 * math.pi)
-    new_headings = numpy.full(count, shared_heading)
+    new_xs = float(x) + numpy.random.uniform(-3.0, 3.0, count)
+    new_ys = float(y) + numpy.random.uniform(-3.0, 3.0, count)
+    new_headings = numpy.random.uniform(0, 2 * math.pi, count)
     new_speeds = numpy.random.uniform(0, 10, count)
     new_masses = numpy.full(count, 'medium', dtype=object)
 
