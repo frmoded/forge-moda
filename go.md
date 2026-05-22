@@ -1,7 +1,7 @@
 ---
 type: action
 role: root
-inputs: [state, dt, temperature]
+inputs: []
 description: "Block 9 — go event. One simulation tick; history-dependent per C8 (reads its own prior snapshot to accumulate)."
 generation_notes: |
   Keep go a pass-through (return the last context.compute result
@@ -18,13 +18,19 @@ generation_notes: |
       previous tick.
     - Otherwise (first call, no prior snapshot) fall back to
       `sample_state`.
+
+  Python signature must be:
+    def compute(context, state=None, dt=1/30, temperature="medium")
+  These parameters are runtime-injected by the moda simulator's
+  /moda/compute fast-path. The English body intentionally doesn't
+  mention them — they're not student-visible knobs. Defaults:
+  state=None triggers the snapshot read, dt=1/30 is the 30Hz
+  default, temperature="medium" matches the simulator's default
+  slider position and is used when a student clicks the Forge
+  button manually.
 ---
 
 # English
-
-Inputs: state (optional), dt (optional), temperature (optional)
-
-Defaults when omitted: `state` → None, `dt` → 1/30, `temperature` → "medium".
 
 Call [[ask_all_particles]] with dt.
 Call [[ask_water_particles]] with temperature.

@@ -1,13 +1,20 @@
 ---
 type: action
 role: root
-inputs: [temperature]
+inputs: []
 description: "Block 1 — setup event. Create the water population and set its speed + mass."
+generation_notes: |
+  Python signature must be:
+    def compute(context, temperature="medium")
+  The `temperature` parameter is runtime-injected by /moda/init
+  (which passes args=("medium",) at session-start). The English
+  body intentionally doesn't list it as a student input — it's a
+  simulator-provided value. Default "medium" matches the
+  simulator's default slider position and is used when a student
+  clicks the Forge button manually.
 ---
 
 # English
-
-Inputs: temperature
 
 Establish an empty chamber: a brand-new simulation state with no particles, 800 units wide and 600 units tall, tick 0. (These are the v1 defaults; there is no scenario lookup.)
 Call [[create_water_particles]].
@@ -19,7 +26,7 @@ This is the initial-population event and the ORIGIN of the simulation state — 
 # Python
 
 ```python
-def compute(context, temperature):
+def compute(context, temperature="medium"):
     ids = numpy.array([], dtype=numpy.int64)
     types = numpy.array([], dtype=object)
     xs = numpy.array([], dtype=numpy.float64)
