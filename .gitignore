@@ -1,0 +1,6 @@
+
+# Drain 2026-08-25-0140 — driver adjudication: execution values are
+# local runtime records, not repo content. Snapshots keep being written
+# locally (go-continuity, Edges panel, explicit freeze); they just stop
+# living in git.
+.forge/
